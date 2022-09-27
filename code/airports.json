@@ -1,0 +1,9 @@
+{"ident":"00A","type":"heliport","name":"Total Rf Heliport","geometry":{"type":"Point","coordinates":[-74.93360137939453,40.07080078125]}}
+{"ident":"00AK","type":"small_airport","name":"Lowell Field","geometry":{"type":"Point","coordinates":[-151.695999146,59.94919968]}}
+{"ident":"00AR","type":"closed","name":"Newport Hospital \u0026 Clinic Heliport","geometry":{"type":"Point","coordinates":[-91.254898,35.6087]}}
+{"ident":"00AS","type":"small_airport","name":"Fulton Airport","geometry":{"type":"Point","coordinates":[-97.8180194,34.9428028]}}
+{"ident":"00AZ","type":"small_airport","name":"Cordes Airport","geometry":{"type":"Point","coordinates":[-112.16500091552734,34.305599212646484]}}
+{"ident":"00CA","type":"small_airport","name":"Goldstone /Gts/ Airport","geometry":{"type":"Point","coordinates":[-116.888000488,35.350498199499995]}}
+{"ident":"00CL","type":"small_airport","name":"Williams Ag Airport","geometry":{"type":"Point","coordinates":[-121.763427,39.427188]}}
+{"ident":"00CN","type":"heliport","name":"Kitchen Creek Helibase Heliport","geometry":{"type":"Point","coordinates":[-116.4597417,32.7273736]}}
+{"ident":"00CN","type":"heliport","name":"Thisis the test document","geometry":{"type":"Point","coordinates":[-116.4597417,32.7273736]}}
