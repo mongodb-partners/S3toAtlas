@@ -29,15 +29,18 @@ As of now there are no director connectors are available in AWS Glue Studio to c
 
 ## Steps for Integration
 
+### 1.Set up the MongoDB Atlas cluster
+
+Please follow the [link](https://www.mongodb.com/docs/atlas/tutorial/deploy-free-tier-cluster) to setup a free cluster in MongoDB Atlas
 
 
-### 1.Upload the sample JSON file to S3 bucket
+### 2.Upload the sample JSON file to S3 bucket
 
 Upload the sample [airport.json](https://github.com/Babusrinivasan76/s3toAtlas/blob/main/code/airports.json) file to the S3 bucket
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/13.S3%20upload.png)
 
 
-### 2.Create a Glue Studio Job and run
+### 3.Create a Glue Studio Job and run
 
  Click on the Job from the menu and select "Pyspark Scripts"
 
@@ -62,7 +65,7 @@ Save the job and click "Run"
 Ensure the job ran successfully. You can refer the logs for the troubleshooting
 
 
-### 3.Validate the Data in MongoDB Atlas
+### 4.Validate the Data in MongoDB Atlas
 
 Validate the S3 data are created as a document in MongoDB Atlas
 
