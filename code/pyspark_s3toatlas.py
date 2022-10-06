@@ -28,11 +28,11 @@ job = Job(glueContext)
 job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 
-## Read from the S3 bucket ###
+## Read from the S3 bucket ###.  ## update the S3 bucket name ##
 
 ds = glueContext.create_dynamic_frame_from_options(connection_type = "s3", connection_options={"paths": ["s3://xxxx/customer_activity.json"]}, format="json", format_options={}, transformation_ctx = "")
 
-#### MongoDB Atlas Connection ###
+#### MongoDB Atlas Connection ###. ## update the MongoDB Atlas Connection ##
 
 mongo_uri = "mongodb://XXXXX.frzascf.mongodb.net:27017,xxxxxxx.frzascf.mongodb.net:27017,xxxxxxxx.frzascf.mongodb.net:27017/?ssl=true&replicaSet=atlas-br364o-shard-0&authSource=admin&retryWrites=true&w=majority"
 
