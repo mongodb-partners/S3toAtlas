@@ -33,6 +33,8 @@ As of now there are no director connectors are available in AWS Glue Studio to c
 
 Please follow the [link](https://www.mongodb.com/docs/atlas/tutorial/deploy-free-tier-cluster) to setup a free cluster in MongoDB Atlas
 
+Configure the database for [network security](https://www.mongodb.com/docs/atlas/security/add-ip-address-to-list/) and [access](https://www.mongodb.com/docs/atlas/tutorial/create-mongodb-user-for-cluster/).
+
 
 ### 2.Upload the sample JSON file to S3 bucket
 
