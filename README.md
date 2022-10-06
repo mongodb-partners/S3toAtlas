@@ -44,9 +44,13 @@ Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/b
 
 ### 3.Create a Glue Studio Job and run
 
- Click on the Job from the menu and select "Spark script editor"
+Login to [AWS Console](https://aws.amazon.com/console/)
 
- Click "Create Job"
+Search for AWS Glue Stuido
+
+Click on the Job from the menu and select "Spark script editor"
+
+Click "Create Job"
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/28.create%20a%20job.png)
 
