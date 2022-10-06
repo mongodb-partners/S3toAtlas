@@ -46,7 +46,7 @@ Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/b
 
 Login to [AWS Console](https://aws.amazon.com/console/)
 
-Search for AWS Glue Stuido
+Search for AWS Glue Studio
 
 Click on the Job from the menu and select "Spark script editor"
 
