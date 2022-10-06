@@ -71,10 +71,6 @@ Update the code for S3 bucket details (#ds) , MongoDB Atlas Connection  (#mongo_
 
 Configure the parameters in "Job details" tab
 
-![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/30.update%20the%20job%20details.png)
-
-![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/31.update%20the%20job%20details.png)
-
 Update the following parameters:
 
 a. Name 
@@ -82,6 +78,13 @@ a. Name
 b. IAM Role
 
 You can keep the default values for all other parameters.
+
+
+![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/30.update%20the%20job%20details.png)
+
+![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/31.update%20the%20job%20details.png)
+
+
 
 Save the job and click "Run" on the top right.
 
