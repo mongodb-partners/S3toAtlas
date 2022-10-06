@@ -47,7 +47,7 @@ Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/b
 Login to [AWS Console](https://aws.amazon.com/console/)
 
 
-Search for AWS Glue Studio
+Search for AWS Glue Studio and select from the dropdown (Features --> AWS Glue Studio)
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/33.AWS%20Glue%20Studio%20Search.png)
 
