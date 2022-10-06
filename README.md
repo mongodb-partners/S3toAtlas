@@ -25,7 +25,7 @@ AWS Glue Studio is a new graphical interface that makes it easy to create, run, 
 ## Integration Features
 
 With AWS Glue Studio, we can now create scripts for integrations with all the data source. In this module, we utilized the MongoDB Atlas's Spark connectors to connect to the MongoDB Atlas.
-As of now there are no director connectors are available in AWS Glue Studio to connect to MongoDB Atlas. 
+
 
 ## Steps for Integration
 
