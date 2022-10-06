@@ -56,7 +56,7 @@ Search for AWS Glue Studio and select from the dropdown (Features --> AWS Glue S
 Click on the Job from the menu and select "Spark script editor"
 
 
-Click "Create Job"
+Click "Create"
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/28.create%20a%20job.png)
 
