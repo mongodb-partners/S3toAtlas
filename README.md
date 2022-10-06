@@ -38,7 +38,7 @@ Configure the database for [network security](https://www.mongodb.com/docs/atlas
 
 ### 2.Upload the sample JSON file to S3 bucket
 
-Upload the sample [airport.json](https://github.com/Babusrinivasan76/s3toAtlas/blob/main/code/airports.json) file to the S3 bucket
+Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/airports.json) file to the S3 bucket
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/13.S3%20upload.png)
 
 
