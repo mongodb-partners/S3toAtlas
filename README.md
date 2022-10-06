@@ -81,6 +81,6 @@ Validate the S3 data are created as a document in MongoDB Atlas
 
 Hope this technical guide helped you in migrating the data into the MongoDB Atlas cluster using the AWS Glue services.
 
-This solution can be extended to any of the AWS Glue compatible source data , and the same can be migrated to MongoDB Atlas. Refere [link](https://github.com/Babusrinivasan76/atlasgluestudiointegration).
+This solution can be extended to any of the AWS Glue Studio Catalog services. Refer [link](https://github.com/Babusrinivasan76/atlasgluestudiointegration).
 
 For any assistance please reach out to partners@mongodb.com
