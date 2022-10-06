@@ -44,7 +44,7 @@ Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/b
 
 ### 3.Create a Glue Studio Job and run
 
- Click on the Job from the menu and select "Pyspark Scripts"
+ Click on the Job from the menu and select "Spark script editor"
 
  Click "Create Job"
 
