@@ -64,7 +64,7 @@ Click "Create"
 Copy the Code from the [link](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/pyspark_s3toatlas.py) and paste 
 
 
-Update the code for S3 bucket details (#ds) , MongoDB Atlas Connection  (#mongo_uri), Database, collection, Username and Password details
+Update the code for S3 bucket details (#ds) , MongoDB Atlas Connection  (#mongo_uri), database, collection, username and password details
 
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/29.copy%20the%20code.png)
