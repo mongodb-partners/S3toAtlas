@@ -69,7 +69,7 @@ Copy the Code from the [link](https://github.com/mongodb-partners/S3toAtlas/blob
 Update the code for S3 bucket details (#ds) , MongoDB Atlas Connection  (#mongo_uri), Database, collection, Username and Password details
 
 
-Configure the parameters
+Configure the parameters in "Job details" tab
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/30.update%20the%20job%20details.png)
 
