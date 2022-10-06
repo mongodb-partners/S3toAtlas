@@ -49,9 +49,12 @@ Upload the sample [airport.json](https://github.com/Babusrinivasan76/s3toAtlas/b
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/28.create%20a%20job.png)
 
 
-Copy the Code from the [link](https://github.com/Babusrinivasan76/s3toAtlas/blob/main/code/pyspark_s3toatlas.py) and paste 
+Copy the Code from the [link](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/pyspark_s3toatlas.py) and paste 
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/29.copy%20the%20code.png)
+
+
+Update the code for S3 bucket details (#ds) , MongoDB Atlas Connection  (#mongo_uri), Database, collection, Username and Password details
 
 
 Configure the parameters
