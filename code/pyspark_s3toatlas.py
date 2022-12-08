@@ -31,8 +31,8 @@ job.init(args['JOB_NAME'], args)
 ## setup the MongoDB Credentials ###
 def get_secret():
 
-    secret_name = "<<SECRET_NAME>>"
-    region_name = "<<REGION_NAME>>"
+    secret_name = $SECRET_NAME
+    region_name = $REGION_NAME
 
     # Create a Secrets Manager client
     session = boto3.session.Session()
