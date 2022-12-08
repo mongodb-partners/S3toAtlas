@@ -155,8 +155,8 @@ write_mongo_options = {
     "uri": mongo_uri,
     "database": "<databasename>",    ## UPDATE the Database name ##
     "collection": "<collection name>",   ## UPDATE the Collection name ##
-    "username": username,   ## UPDATE the Database user name ##
-    "password": password  ## UPDATE the password  ##
+    "username": username,   
+    "password": password  
 }
 
 # Write DynamicFrame to MongoDB and DocumentDB
