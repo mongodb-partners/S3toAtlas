@@ -28,9 +28,6 @@ job = Job(glueContext)
 job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 
-BUCKET_NAME='<<Bucket-Name>>'
-PREFIX='<<Prefix>>'
-
 ## setup the MongoDB Credentials : update the Secret Name and Region ###
 def get_secret():
 
@@ -84,6 +81,10 @@ def get_secret():
             decoded_binary_secret = base64.b64decode(get_secret_value_response['SecretBinary'])
             return decoded_binary_secret
             
+
+BUCKET_NAME='<<Bucket-Name>>'
+PREFIX='<<Prefix>>'
+
 
  user_name, password, server_addr = get_secret()
 
