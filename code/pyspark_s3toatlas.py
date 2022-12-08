@@ -67,7 +67,7 @@ user_name, password, server_addr = get_secret()
 
 ## Read from the S3 bucket ###.  ## UPDATE the S3 bucket name ##
 
-ds = glueContext.create_dynamic_frame_from_options(connection_type = "s3", connection_options={"paths": ["s3://xxxx/airports.json"]}, format="json", format_options={}, transformation_ctx = "")
+ds = glueContext.create_dynamic_frame_from_options(connection_type = "s3", connection_options={"paths": ["s3://{}/airports.json".format($BUCKET_NAME)]}, format="json", format_options={}, transformation_ctx = "")
 
 #### MongoDB Atlas Connection ###. 
  mongo_uri = "mongodb+srv://{}.mongodb.net/?retryWrites=true&w=majority'".format(server_addr) 
@@ -78,8 +78,8 @@ logger.info("Connecting...")
 
 write_mongo_options = {
     "uri": mongo_uri,
-    "database": "<databasename>",    ## UPDATE the Database name ##
-    "collection": "<collection name>",   ## UPDATE the Collection name ##
+    "database": $DATABASE_NAME,
+    "collection": $COLLECTION_NAME,
     "username": username,   
     "password": password  
 }
