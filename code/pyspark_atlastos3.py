@@ -88,7 +88,8 @@ logger = glueContext.get_logger()
 logger.info("Connecting...")
 
 # Write DynamicFrame to  s3 bucket
-glueContext.write_dynamic_frame.from_options(ds, connection_type = "s3", connection_options={"path": "s3://<<BUCKET_NAME>>/<<PREFIX>>"}, format="json")
+path = "s3://{}/{}".format($BUCKET_NAME, $PREFIX)
+glueContext.write_dynamic_frame.from_options(ds, connection_type = "s3", connection_options={"path": path}, format="json")
 
 logger.info("written to S3!")
 
@@ -99,17 +100,17 @@ BUCKET_NAME='glue-partner'
 PREFIX='atlas_data/'
 
 conn = boto3.client('s3')  # again assumes boto.cfg setup, assume AWS S3
-data = conn.list_objects(Bucket=BUCKET_NAME, Prefix=PREFIX, Delimiter='/')
+data = conn.list_objects(Bucket=$BUCKET_NAME, Prefix=$PREFIX, Delimiter='/')
 
 #Loop in S3 bucket to find the right object
 for objects in data['Contents']:
     print(objects['Key'])
-    if objects['Key'].startswith(PREFIX + 'run-unnamed'):
+    if objects['Key'].startswith($PREFIX + 'run-unnamed'):
         print('Key', objects['Key'])
         s3_resource = boto3.resource('s3')
         copy_source = {
-            'Bucket': BUCKET_NAME,
+            'Bucket': $BUCKET_NAME,
             'Key': objects['Key']
         }
-        s3_resource.Object(BUCKET_NAME, 'dumps_bucket/new_data.json').copy(copy_source)
-        conn.delete_object(Bucket=BUCKET_NAME, Key=objects['Key'])
+        s3_resource.Object($BUCKET_NAME, '{}/{}.json'.format($OUTPUT_PREFIX, $OUTPUT_FILENAME)).copy(copy_source)
+        conn.delete_object(Bucket=$BUCKET_NAME, Key=objects['Key'])
