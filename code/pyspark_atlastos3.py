@@ -28,6 +28,9 @@ job = Job(glueContext)
 job = Job(glueContext)
 job.init(args['JOB_NAME'], args)
 
+BUCKET_NAME='<<Bucket-Name>>'
+PREFIX='<<Prefix>>'
+
 ## setup the MongoDB Credentials : update the Secret Name and Region ###
 def get_secret():
 
@@ -85,12 +88,13 @@ def get_secret():
  user_name, password, server_addr = get_secret()
 
 #### MongoDB Atlas Connection ###. 
- uri = "mongodb+srv://{}.mongodb.net/?retryWrites=true&w=majority'".format(server_addr) 
+
+uri = "mongodb+srv://{}.mongodb.net/?retryWrites=true&w=majority'".format(server_addr) 
 
 read_mongo_options = {
     "uri": uri,
-    "database": "<Database Name<>>",    ## UPDATE the Database name ##
-    "collection": "<<Collection Name>>",   ## UPDATE the Collection name ##
+    "database": "<<Database_name>>",    ## UPDATE the Database name ##
+    "collection": "<<Collection_name>>",   ## UPDATE the Collection name ##
     "username": user_name,   
     "password": password  
 }
@@ -102,8 +106,26 @@ logger = glueContext.get_logger()
 logger.info("Connecting...")
 
 # Write DynamicFrame to  s3 bucket
-glueContext.write_dynamic_frame.from_options(ds, connection_type = "s3", connection_options={"path": "s3://<bucketname>"}, format="json")
+glueContext.write_dynamic_frame.from_options(ds, connection_type = "s3", connection_options={"path": "s3://<<BUCKET_NAME>>/<<PREFIX>>"}, format="json")
 
 logger.info("written to S3!")
 
-job.commit()
+#Renaming created file
+import boto3
+
+
+conn = boto3.client('s3')  # again assumes boto.cfg setup, assume AWS S3
+data = conn.list_objects(Bucket=BUCKET_NAME, Prefix=PREFIX, Delimiter='/')
+
+#Loop in S3 bucket to find the right object
+for objects in data['Contents']:
+    print(objects['Key'])
+    if objects['Key'].startswith(PREFIX + 'run-unnamed'):
+        print('Key', objects['Key'])
+        s3_resource = boto3.resource('s3')
+        copy_source = {
+            'Bucket': BUCKET_NAME,
+            'Key': objects['Key']
+        }
+        s3_resource.Object(BUCKET_NAME, '<<NEW_PREFIX>>/<<NEW_FILENAME>>.json').copy(copy_source)
+        conn.delete_object(Bucket=BUCKET_NAME, Key=objects['Key'])
