@@ -18,7 +18,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 ## @params: [JOB_NAME]
-args = getResolvedOptions(sys.argv, ['JOB_NAME'])
+args = getResolvedOptions(sys.argv, ['JOB_NAME', 'BUCKET_NAME', 'COLLECTION_NAME', 'DATABASE_NAME', 'OUTPUT_PREFIX', 'OUTPUT_FILENAME', 'PREFIX', 'REGION_NAME', 'SECRET_NAME'])
 
 sc = pyspark.SparkContext()
 glueContext = GlueContext(sc)
@@ -31,8 +31,8 @@ job.init(args['JOB_NAME'], args)
 ## setup the MongoDB Credentials : update the Secret Name and Region ###
 def get_secret():
 
-    secret_name = $SECRET_NAME
-    region_name = $REGION_NAME
+    secret_name = args['SECRET_NAME']
+    region_name = args['REGION_NAME']
 
     # Create a Secrets Manager client
     session = boto3.session.Session()
@@ -63,8 +63,8 @@ def get_secret():
             return decoded_binary_secret
             
 
-BUCKET_NAME=$BUCKET_NAME
-PREFIX=$PREFIX
+BUCKET_NAME=args['BUCKET_NAME'], 
+PREFIX=args['PREFIX'], 
 
 
 user_name, password, server_addr = get_secret()
@@ -75,8 +75,8 @@ uri = "mongodb+srv://{}.mongodb.net/?retryWrites=true&w=majority'".format(server
 
 read_mongo_options = {
     "uri": uri,
-    "database":$DATABASE_NAME,    
-    "collection": $COLLECTION_NAME,   
+    "database":args['DATABASE_NAME'],
+    "collection": args['COLLECTION_NAME'],   
     "username": user_name,   
     "password": password  
 }
@@ -88,7 +88,7 @@ logger = glueContext.get_logger()
 logger.info("Connecting...")
 
 # Write DynamicFrame to  s3 bucket
-path = "s3://{}/{}".format($BUCKET_NAME, $PREFIX)
+path = "s3://{}/{}".format(args['BUCKET_NAME'], args['PREFIX'])
 glueContext.write_dynamic_frame.from_options(ds, connection_type = "s3", connection_options={"path": path}, format="json")
 
 logger.info("written to S3!")
@@ -96,21 +96,22 @@ logger.info("written to S3!")
 
 #Renaming created file
 import boto3
-BUCKET_NAME='glue-partner'
-PREFIX='atlas_data/'
 
 conn = boto3.client('s3')  # again assumes boto.cfg setup, assume AWS S3
-data = conn.list_objects(Bucket=$BUCKET_NAME, Prefix=$PREFIX, Delimiter='/')
+data = conn.list_objects(Bucket=args['BUCKET_NAME'], Prefix=args['PREFIX'], Delimiter='/')
 
+logger.info(data)
 #Loop in S3 bucket to find the right object
 for objects in data['Contents']:
     print(objects['Key'])
-    if objects['Key'].startswith($PREFIX + 'run-unnamed'):
+    if objects['Key'].startswith(args['PREFIX'] + 'run-unnamed'):
         print('Key', objects['Key'])
         s3_resource = boto3.resource('s3')
         copy_source = {
-            'Bucket': $BUCKET_NAME,
+            'Bucket': args['BUCKET_NAME'], 
             'Key': objects['Key']
         }
-        s3_resource.Object($BUCKET_NAME, '{}/{}.json'.format($OUTPUT_PREFIX, $OUTPUT_FILENAME)).copy(copy_source)
-        conn.delete_object(Bucket=$BUCKET_NAME, Key=objects['Key'])
+        s3_resource.Object(args['BUCKET_NAME'], '{}/{}.json'.format(args['OUTPUT_PREFIX'], args['OUTPUT_FILENAME'])).copy(copy_source)
+        conn.delete_object(Bucket=args['BUCKET_NAME'], Key=objects['Key'])
+
+logger.info('Renamed file as {}/{}'.format(args['OUTPUT_PREFIX'], args['OUTPUT_FILENAME']))
