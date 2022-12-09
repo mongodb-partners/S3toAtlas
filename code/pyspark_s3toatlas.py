@@ -18,7 +18,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 ## @params: [JOB_NAME]
-args = getResolvedOptions(sys.argv, ['JOB_NAME', 'SECRET_NAME', 'REGION_NAME', 'BUCKET_NAME', 'DATABASE_NAME', 'COLLECTION_NAME'])
+args = getResolvedOptions(sys.argv, ['JOB_NAME', 'SECRET_NAME', 'REGION_NAME', 'BUCKET_NAME', 'DATABASE_NAME', 'COLLECTION_NAME','INPUT_FILENAME'])
 
 sc = pyspark.SparkContext()
 glueContext = GlueContext(sc)
@@ -64,9 +64,9 @@ def get_secret():
             
 user_name, password, server_addr = get_secret()
 
-## Read from the S3 bucket ###.  ## UPDATE the S3 bucket name ##
+## Read from the S3 bucket ###. 
 
-ds = glueContext.create_dynamic_frame_from_options(connection_type = "s3", connection_options={"paths": ["s3://{}/airports.json".format(args['BUCKET_NAME'])]}, format="json", format_options={}, transformation_ctx = "")
+ds = glueContext.create_dynamic_frame_from_options(connection_type = "s3", connection_options={"paths": ["s3://{}/{}".format(args['BUCKET_NAME'],args['INPUT_FILENAME'])]}, format="json", format_options={}, transformation_ctx = "")
 
 #### MongoDB Atlas Connection ###. 
 mongo_uri = "mongodb+srv://{}.mongodb.net/?retryWrites=true&w=majority".format(server_addr) 
