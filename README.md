@@ -26,6 +26,11 @@ This article is to demonstrate the capabilities of MongoDB Atlas and AWS Glue St
 
 With AWS Glue Studio, we can now create scripts for integrations with all the data source. In this module, we utilized the MongoDB Atlas's Spark connectors to connect to the MongoDB Atlas.
 
+Pre-Requistes:
+
+1. [AWS Account](https://aws.amazon.com/free/free-tier/)
+2. MongoDB Atlas free cluster
+3. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 ## Steps for Integration
 
@@ -35,7 +40,22 @@ Please follow the [link](https://www.mongodb.com/docs/atlas/tutorial/deploy-free
 
 Configure the database for [network security](https://www.mongodb.com/docs/atlas/security/add-ip-address-to-list/) and [access](https://www.mongodb.com/docs/atlas/tutorial/create-mongodb-user-for-cluster/).
 
+### 2. Connect to AWS CLI environment and Set up the AWS Secrets
 
+		
+[Connect to AWS CLI environment](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html)  
+
+	
+execute the below CLI command to create a secret
+
+	
+	aws secretsmanager create-secret\ 
+    	--name partner-gluejob-secrets-s3atlas1\   
+    	--description "Secret for MongoDB Atlas"\                                 
+    	--secret-string "{\"USERNAME\":\"<enter the user name> \",\"PASSWORD\":\"<enter the password>\",\"SERVER_ADDR\":\"<enter the servername>\"}"
+
+	
+		
 ### 2.Upload the sample JSON file to S3 bucket
 
 Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/airports.json) file to the S3 bucket
