@@ -55,7 +55,10 @@ execute the below CLI command to create a secret and copy the ARN from the outpu
     	--secret-string "{\"USERNAME\":\"<enter the user name> \",\"PASSWORD\":\"<enter the password>\",\"SERVER_ADDR\":\"<enter the servername>\"}"
 
 
-### 3. create the AWS IAM role to grant access to S3,Glueservice, Glueconsole and Secrets . Refer the screenshots below as reference.
+### 3. Create the AWS IAM role to grant access to S3,Glueservice, Glueconsole and Secrets
+
+
+Refer the screenshots below as reference.
 
 
 <img width="1688" alt="image" src="https://user-images.githubusercontent.com/101570105/208076474-de8598fd-6b26-4e3b-8ef6-dca5dd68792d.png">
@@ -99,13 +102,13 @@ Trust Policy
 
 
 		
-### 2.Upload the sample JSON file to S3 bucket
+### 4.Upload the sample JSON file to S3 bucket
 
 Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/airports.json) file to the S3 bucket
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/13.S3%20upload.png)
 
 
-### 3.Create a Glue Studio Job and run
+### 5.Create a Glue Studio Job and run
 
 Login to [AWS Console](https://aws.amazon.com/console/)
 
@@ -131,7 +134,6 @@ Update the code for S3 bucket details (#ds) , MongoDB Atlas Connection  (#mongo_
 
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/29.copy%20the%20code.png)
-
 
 
 
@@ -163,7 +165,7 @@ Save the job and click "Run" on the top right.
 Click on the "Runs" tab and ensure the job ran successfully. You can refer the logs in the "Runs" tab for troubleshooting
 
 
-### 4.Validate the Data in MongoDB Atlas
+### 6.Validate the Data in MongoDB Atlas
 
 Validate the S3 data are created as a document in MongoDB Atlas
 
@@ -172,7 +174,9 @@ Validate the S3 data are created as a document in MongoDB Atlas
 
 ## Summary
 
-Hope this technical guide helped you in migrating the data into the MongoDB Atlas cluster using the AWS Glue Studio.
+The above steps demonstrate the movement of data from S3 bucket to MongoDB Atlas. The same steps can be used to move data from MongoDB Atlas to S3 bucket using the code.
+
+Hope this technical guide helped you in move the data from and to the MongoDB Atlas cluster using the AWS Glue Studio.
 
 This solution can be extended to other data sources through AWS Glue Studio - Catalog service. Refer [link](https://github.com/Babusrinivasan76/atlasgluestudiointegration).
 
