@@ -109,6 +109,9 @@ You can keep the default values for all other parameters.
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/31.update%20the%20job%20details.png)
 
+
+### Job Parameter
+
 <img width="1001" alt="image" src="https://user-images.githubusercontent.com/101570105/208073166-cbf10d4b-1f19-4031-9bc6-cf0367f14e96.png">
 
 
