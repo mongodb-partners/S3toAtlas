@@ -26,7 +26,7 @@ This article is to demonstrate the capabilities of MongoDB Atlas and AWS Glue St
 
 With AWS Glue Studio, we can now create scripts for integrations with all the data source. In this module, we utilized the MongoDB Atlas's Spark connectors to connect to the MongoDB Atlas.
 
-Pre-Requistes:
+## Prerequisite:
 
 1. [AWS Account](https://aws.amazon.com/free/free-tier/)
 2. MongoDB Atlas free cluster
