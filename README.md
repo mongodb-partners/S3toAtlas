@@ -174,7 +174,7 @@ Validate the S3 data are created as a document in MongoDB Atlas
 
 ## Summary
 
-The above steps demonstrate the movement of data from S3 bucket to MongoDB Atlas. The same steps can be used to move data from MongoDB Atlas to S3 bucket using the code.
+The above steps demonstrate the movement of data from S3 bucket to MongoDB Atlas. The same steps can be used to move data from MongoDB Atlas to S3 bucket using the [code](https://github.com/mongodb-partners/S3toAtlas/tree/main/code#:~:text=3%20months%20ago-,pyspark_atlastos3.py,-Update%20pyspark_atlastos3.py).
 
 Hope this technical guide helped you in move the data from and to the MongoDB Atlas cluster using the AWS Glue Studio.
 
