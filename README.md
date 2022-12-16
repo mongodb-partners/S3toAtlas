@@ -46,7 +46,7 @@ Configure the database for [network security](https://www.mongodb.com/docs/atlas
 [Connect to AWS CLI environment](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html)  
 
 	
-execute the below CLI command to create a secret
+execute the below CLI command to create a secret and copy the ARN from the output.
 
 	
 	aws secretsmanager create-secret\ 
@@ -54,7 +54,50 @@ execute the below CLI command to create a secret
     	--description "Secret for MongoDB Atlas"\                                 
     	--secret-string "{\"USERNAME\":\"<enter the user name> \",\"PASSWORD\":\"<enter the password>\",\"SERVER_ADDR\":\"<enter the servername>\"}"
 
-	
+
+### 3. create the AWS IAM role to grant access to S3,Glueservice, Glueconsole and Secrets . Refer the screenshots below as reference.
+
+
+<img width="1688" alt="image" src="https://user-images.githubusercontent.com/101570105/208076474-de8598fd-6b26-4e3b-8ef6-dca5dd68792d.png">
+
+
+
+<img width="1716" alt="image" src="https://user-images.githubusercontent.com/101570105/208076795-6f37e50b-a07a-4b6e-9ec1-0d1044be819c.png">
+
+
+
+
+
+
+In-line policy to grant access to the AWS Secrets, using the ARN copied in the above step2
+
+
+			{
+			    "Version": "2012-10-17",
+			    "Statement": {
+				"Effect": "Allow",
+				"Action": "secretsmanager:GetSecretValue",
+				"Resource": "<ARN for AWS Secret>"
+			    }
+			}
+
+
+Trust Policy
+
+		{
+		    "Version": "2012-10-17",
+		    "Statement": [
+			{
+			    "Effect": "Allow",
+			    "Principal": {
+				"Service": "glue.amazonaws.com"
+					 },
+			    "Action": "sts:AssumeRole"
+			}
+				]
+		}
+
+
 		
 ### 2.Upload the sample JSON file to S3 bucket
 
