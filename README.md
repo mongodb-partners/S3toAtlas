@@ -160,6 +160,16 @@ You can keep the default values for all other parameters.
 <img width="1001" alt="image" src="https://user-images.githubusercontent.com/101570105/208073166-cbf10d4b-1f19-4031-9bc6-cf0367f14e96.png">
 
 
+
+		--BUCKET_NAME
+		--COLLECTION_NAME
+		--DATABASE_NAME
+		--INPUT_FILENAME
+		--PREFIX
+		--REGION_NAME
+		--SECRET_NAME
+
+
 Save the job and click "Run" on the top right.
 
 Click on the "Runs" tab and ensure the job ran successfully. You can refer the logs in the "Runs" tab for troubleshooting
