@@ -50,7 +50,7 @@ execute the below CLI command to create a secret
 
 	
 	aws secretsmanager create-secret\ 
-    	--name partner-gluejob-secrets-s3atlas1\   
+    	--name partner-gluejob-secrets-s3atlas\   
     	--description "Secret for MongoDB Atlas"\                                 
     	--secret-string "{\"USERNAME\":\"<enter the user name> \",\"PASSWORD\":\"<enter the password>\",\"SERVER_ADDR\":\"<enter the servername>\"}"
 
