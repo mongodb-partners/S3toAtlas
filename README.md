@@ -42,12 +42,7 @@ Configure the database for [network security](https://www.mongodb.com/docs/atlas
 
 ### 2. Connect to AWS CLI environment and Set up the AWS Secrets
 
-While providing the server address , provide only the server name
 
-Example provide below:
-
-Server connection string : "mongodb+srv://awss3demoserver-pl-0.sicsi.mongodb.net/?retryWrites=true&w=majority"
-SERVER_ADDR = awss3demoserver-pl-0.sicsi
 		
 [Connect to AWS CLI environment](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html)  
 
@@ -60,6 +55,13 @@ execute the below CLI command to create a secret and copy the ARN from the outpu
     	--description "Secret for MongoDB Atlas"\                                 
     	--secret-string "{\"USERNAME\":\"<enter the user name> \",\"PASSWORD\":\"<enter the password>\",\"SERVER_ADDR\":\"<enter the servername>\"}"
 
+Note: 
+While providing the server address , provide only the server name
+
+Example provide below:
+
+Server connection string : "mongodb+srv://awss3demoserver-pl-0.sicsi.mongodb.net/?retryWrites=true&w=majority"
+SERVER_ADDR = awss3demoserver-pl-0.sicsi
 
 ### 3. Create the AWS IAM role to grant access to S3,Glueservice, Glueconsole and Secrets
 
