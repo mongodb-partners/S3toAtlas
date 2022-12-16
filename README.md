@@ -80,19 +80,6 @@ Refer the screenshots below as reference.
 
 
 
-In-line policy to grant access to the AWS Secrets, using the ARN copied in the above step2
-
-
-			{
-			    "Version": "2012-10-17",
-			    "Statement": {
-				"Effect": "Allow",
-				"Action": "secretsmanager:GetSecretValue",
-				"Resource": "<ARN for AWS Secret>"
-			    }
-			}
-
-
 Trust Policy
 
 		{
@@ -108,6 +95,20 @@ Trust Policy
 				]
 		}
 
+
+
+
+In-line policy to grant access to the AWS Secrets, using the ARN copied in the above step2
+
+
+			{
+			    "Version": "2012-10-17",
+			    "Statement": {
+				"Effect": "Allow",
+				"Action": "secretsmanager:GetSecretValue",
+				"Resource": "<ARN for AWS Secret>"
+			    }
+			}
 
 		
 ### 4.Upload the sample JSON file to S3 bucket
