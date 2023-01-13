@@ -95,23 +95,22 @@ logger.info("written to S3!")
 
 
 #Renaming created file
-#import boto3
+import boto3
 
-#conn = boto3.client('s3')  # again assumes boto.cfg setup, assume AWS S3
-#data = conn.list_objects(Bucket=args['BUCKET_NAME'], Prefix=args['PREFIX'], Delimiter='/')
+conn = boto3.client('s3')  # again assumes boto.cfg setup, assume AWS S3
+data = conn.list_objects(Bucket=args['BUCKET_NAME'], Prefix=args['PREFIX'], Delimiter='/')
 
-#logger.info(data)
-#Loop in S3 bucket to find the right object
-#for objects in data['Contents']:
-#    print(objects['Key'])
-#    if objects['Key'].startswith(args['PREFIX'] + 'run-unnamed'):
-#        print('Key', objects['Key'])
-#        s3_resource = boto3.resource('s3')
-#        copy_source = {
-#           'Bucket': args['BUCKET_NAME'], 
-#            'Key': objects['Key']
-#        }
-#        s3_resource.Object(args['BUCKET_NAME'], '{}/{}.json'.format(args['OUTPUT_PREFIX'], args['OUTPUT_FILENAME'])).copy(copy_source)
-#        conn.delete_object(Bucket=args['BUCKET_NAME'], Key=objects['Key'])
+# Loop in S3 bucket to find the right object
+for objects in data['Contents']:
+   print(objects['Key'])
+   if objects['Key'].startswith(args['PREFIX'] + 'run-'):
+       print('Key', objects['Key'])
+       s3_resource = boto3.resource('s3')
+       copy_source = {
+          'Bucket': args['BUCKET_NAME'], 
+           'Key': objects['Key']
+       }
+       s3_resource.Object(args['BUCKET_NAME'], '{}/{}.json'.format(args['OUTPUT_PREFIX'], args['OUTPUT_FILENAME'])).copy(copy_source)
+       conn.delete_object(Bucket=args['BUCKET_NAME'], Key=objects['Key'])
 
-#logger.info('Renamed file as {}/{}'.format(args['OUTPUT_PREFIX'], args['OUTPUT_FILENAME']))
+logger.info('Renamed file as {}/{}'.format(args['OUTPUT_PREFIX'], args['OUTPUT_FILENAME']))
