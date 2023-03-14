@@ -71,7 +71,7 @@ user_name, password, server_addr = get_secret()
 
 #### MongoDB Atlas Connection ###. 
 
-uri = "mongodb+srv://{}.mongodb.net/?retryWrites=true&w=majority'".format(server_addr) 
+uri = "mongodb+srv://{}.mongodb.net/?retryWrites=true&w=majority".format(server_addr) 
 
 read_mongo_options = {
     "uri": uri,
