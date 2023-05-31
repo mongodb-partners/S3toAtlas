@@ -1,14 +1,14 @@
 # ETL with MongoDB Atlas and AWS Glue Studio (through Pyspark scripts)
 
 ## Introduction
-The amount of information is growing minute by minute and storing the volumes of data is paramount for any analytics or business intelligence. Enterprises are now generating the DataLake to consolidate all their federated data to a single location. 
-	
-The ETL (Extract Transform and Load) process is key functionality to having a well-structured process for the data lake. 
-	
+The amount of information is growing minute by minute and storing the volumes of data is paramount for any analytics or business intelligence. Enterprises are now generating the DataLake to consolidate all their federated data to a single location.
+
+The ETL (Extract Transform and Load) process is key functionality to having a well-structured process for the data lake.
+
 AWS provides various services for data transfer and AWS Glue is the prime service for their ETL offering. AWS Glue studio is also made available to have a graphical user interface to ease the ETL process.
 
 In this document, we will demonstrate how to integrate MongoDB Atlas with the AWS Glue services. We will show a practical guide for loading the data from S3 through AWS Glue Crawler, Mapping, and Data Catalog services to MongoDB Atlas.
-	
+
 This can be extended to any of the source connectors of AWS GLue like CSV, XLS, Text, RDBMS, Stream data, etc.
 
 This article is to demonstrate the capabilities of MongoDB Atlas and AWS Glue Studio Integration.
@@ -40,28 +40,38 @@ Please follow the [link](https://www.mongodb.com/docs/atlas/tutorial/deploy-free
 
 Configure the database for [network security](https://www.mongodb.com/docs/atlas/security/add-ip-address-to-list/) and [access](https://www.mongodb.com/docs/atlas/tutorial/create-mongodb-user-for-cluster/).
 
+For this lab, configure the [network access](https://www.mongodb.com/docs/atlas/security/add-ip-address-to-list/) to allow connection from anywhere, as seen in the image bellow. This is a way of making sure that the Glue Job will be able to access your cluster:
+
+![Network access - Allow from anywhere](./media/network-access.png)
+
+ℹ️ _It is not advisable to use over-permissive network access in a real-world setting. The recommended connectivity option would be [AWS PrivateLink](https://www.mongodb.com/docs/atlas/security-private-endpoint/) or [VPC Peering](https://www.mongodb.com/docs/atlas/security-vpc-peering/) with proper network security polices. However, this are not covered in this lab._
+
 ### 2. Connect to AWS CLI environment and Set up the AWS Secrets
 
 
-		
-[Connect to AWS CLI environment](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html)  
 
-	
+[Connect to AWS CLI environment](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html)
+
+
 execute the below CLI command to create a secret and copy the ARN from the output.
 
-	
-	aws secretsmanager create-secret\ 
-    	--name partner-gluejob-secrets-s3atlas\   
-    	--description "Secret for MongoDB Atlas"\                                 
+
+	aws secretsmanager create-secret\
+    	--name partner-gluejob-secrets-s3atlas\
+    	--description "Secret for MongoDB Atlas"\
     	--secret-string "{\"USERNAME\":\"<enter the user name> \",\"PASSWORD\":\"<enter the password>\",\"SERVER_ADDR\":\"<enter the servername>\"}"
 
-Note: 
-While providing the server address , provide only the server name
+Note:
+While providing the server address , provide only the server name.
+
+You can find the server name in the connection string. To view the connection string you can reach for the "Connect" button on your Atlas Cluster.
 
 Example provide below:
 
-Server connection string : "mongodb+srv://awss3demoserver-pl-0.sicsi.mongodb.net/?retryWrites=true&w=majority"
-SERVER_ADDR = awss3demoserver-pl-0.sicsi
+![server name in the connection string](./media/conn-servername.png)
+
+Server connection string: `"mongodb+srv://cluster0.vlan6.mongodb.net/?retryWrites=true&w=majority"`
+SERVER_ADDR = `cluster0.vlan6`
 
 ### 3. Create the AWS IAM role to grant access to S3,Glueservice, Glueconsole and Secrets
 
@@ -110,7 +120,7 @@ In-line policy to grant access to the AWS Secrets, using the ARN copied in the a
 			    }
 			}
 
-		
+
 ### 4.Upload the sample JSON file to S3 bucket
 
 Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/airports.json) file to the S3 bucket
@@ -136,10 +146,10 @@ Click "Create"
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/28.create%20a%20job.png)
 
 
-Copy the Code from the [link](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/pyspark_s3toatlas.py) and paste 
+Copy the Code from the [link](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/pyspark_s3toatlas.py) and paste
 
 
-Update the code for S3 bucket details (#ds) , MongoDB Atlas Connection  (#mongo_uri), database, collection, username and password details
+In the code, you'll find the S3 bucket details (#ds) , MongoDB Atlas Connection  (#mongo_uri), database, collection, username and password details. The Job Parameters (see below) will be used to populate these variables. But you can also choose to change the variables as seen below:
 
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/29.copy%20the%20code.png)
@@ -150,9 +160,9 @@ Configure the parameters in "Job details" tab
 
 Update the following parameters:
 
-a. Name 
+a. Name
 
-b. IAM Role
+b. IAM Role (with the previously created role)
 
 c. Job Parameter
 
