@@ -16,7 +16,7 @@ This article is to demonstrate the capabilities of MongoDB Atlas and AWS Glue St
 
 ## MongoDB Atlas
 
-[MongoDB Atlas](https://www.mongodb.com/atlas) is an all purpose database having features like Document Model, Geo-spatial , Time-seires, hybrid deployment, multi cloud services. It evolved as "Developer Data Platform", intended to reduce the developers workload on development and management the database environment. It also provide a free tier to test out the application / database features.
+[MongoDB Atlas](https://www.mongodb.com/atlas) is an all-purpose database having features like Document Model, Geo-spatial, Time Series, hybrid deployment, and multi-cloud services. It evolved as a "Developer Data Platform", intended to reduce the developer's workload on the development and management the database environment. It also provides a free tier to test out the application/database features.
 
 
 ## AWS Glue Studio
@@ -24,7 +24,12 @@ This article is to demonstrate the capabilities of MongoDB Atlas and AWS Glue St
 
 ## Integration Features
 
-With AWS Glue Studio, we can now create scripts for integrations with all the data source. In this module, we utilized the MongoDB Atlas's Spark connectors to connect to the MongoDB Atlas.
+With AWS Glue Studio, we can now create scripts for integrations with all the data sources. In this module, we utilized the MongoDB Atlas's Spark connectors to connect to the MongoDB Atlas.
+
+## Reference Architecture 
+
+<img width="1100" alt="image" src="https://github.com/mongodb-partners/S3toAtlas/assets/101570105/50765f0c-b7d9-4242-a56f-1fca3e272cfa">
+
 
 ## Prerequisite:
 
@@ -34,9 +39,9 @@ With AWS Glue Studio, we can now create scripts for integrations with all the da
 
 ## Steps for Integration
 
-### 1.Set up the MongoDB Atlas cluster
+### 1. Set up the MongoDB Atlas cluster
 
-Please follow the [link](https://www.mongodb.com/docs/atlas/tutorial/deploy-free-tier-cluster) to setup a free cluster in MongoDB Atlas
+Please follow the [link](https://www.mongodb.com/docs/atlas/tutorial/deploy-free-tier-cluster) to set up a free cluster in MongoDB Atlas
 
 Configure the database for [network security](https://www.mongodb.com/docs/atlas/security/add-ip-address-to-list/) and [access](https://www.mongodb.com/docs/atlas/tutorial/create-mongodb-user-for-cluster/).
 
@@ -44,9 +49,9 @@ For this lab, configure the [network access](https://www.mongodb.com/docs/atlas/
 
 ![Network access - Allow from anywhere](./media/network-access.png)
 
-ℹ️ _It is not advisable to use over-permissive network access in a real-world setting. The recommended connectivity option would be [AWS PrivateLink](https://www.mongodb.com/docs/atlas/security-private-endpoint/) or [VPC Peering](https://www.mongodb.com/docs/atlas/security-vpc-peering/) with proper network security polices. However, this are not covered in this lab._
+ℹ️ _It is not advisable to use over-permissive network access in a real-world setting. The recommended connectivity option would be [AWS PrivateLink](https://www.mongodb.com/docs/atlas/security-private-endpoint/) or [VPC Peering](https://www.mongodb.com/docs/atlas/security-vpc-peering/) with proper network security polices. However, this is not covered in this lab._
 
-### 2. Connect to AWS CLI environment and Set up the AWS Secrets
+### 2. Connect to the AWS CLI environment and Set up the AWS Secrets
 
 
 
@@ -62,7 +67,7 @@ execute the below CLI command to create a secret and copy the ARN from the outpu
     	--secret-string "{\"USERNAME\":\"<enter the user name> \",\"PASSWORD\":\"<enter the password>\",\"SERVER_ADDR\":\"<enter the servername>\"}"
 
 Note:
-While providing the server address , provide only the server name.
+While providing the server address, provide only the server name.
 
 You can find the server name in the connection string. To view the connection string you can reach for the "Connect" button on your Atlas Cluster.
 
@@ -73,10 +78,10 @@ Example provide below:
 Server connection string: `"mongodb+srv://cluster0.vlan6.mongodb.net/?retryWrites=true&w=majority"`
 SERVER_ADDR = `cluster0.vlan6`
 
-### 3. Create the AWS IAM role to grant access to S3,Glueservice, Glueconsole and Secrets
+### 3. Create the AWS IAM role to grant access to S3, Glueservice, Glueconsole, and Secrets
 
 
-Refer the screenshots below as reference.
+Refer to the screenshots below as reference.
 
 
 <img width="1688" alt="image" src="https://user-images.githubusercontent.com/101570105/208076474-de8598fd-6b26-4e3b-8ef6-dca5dd68792d.png">
@@ -121,13 +126,13 @@ In-line policy to grant access to the AWS Secrets, using the ARN copied in the a
 			}
 
 
-### 4.Upload the sample JSON file to S3 bucket
+### 4. Upload the sample JSON file to S3 bucket
 
 Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/airports.json) file to the S3 bucket
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/13.S3%20upload.png)
 
 
-### 5.Create a Glue Studio Job and run
+### 5. Create a Glue Studio Job and run
 
 Login to [AWS Console](https://aws.amazon.com/console/)
 
@@ -149,14 +154,14 @@ Click "Create"
 Copy the Code from the [link](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/pyspark_s3toatlas.py) and paste
 
 
-In the code, you'll find the S3 bucket details (#ds) , MongoDB Atlas Connection  (#mongo_uri), database, collection, username and password details. The Job Parameters (see below) will be used to populate these variables. But you can also choose to change the variables as seen below:
+In the code, you'll find the S3 bucket details (#ds), MongoDB Atlas Connection  (#mongo_uri), database, collection, username and password details. The Job Parameters (see below) will be used to populate these variables. But you can also choose to change the variables as seen below:
 
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/29.copy%20the%20code.png)
 
 
 
-Configure the parameters in "Job details" tab
+Configure the parameters in the "Job details" tab
 
 Update the following parameters:
 
@@ -194,7 +199,7 @@ Save the job and click "Run" on the top right.
 Click on the "Runs" tab and ensure the job ran successfully. You can refer the logs in the "Runs" tab for troubleshooting
 
 
-### 6.Validate the Data in MongoDB Atlas
+### 6. Validate the Data in MongoDB Atlas
 
 Validate the S3 data are created as a document in MongoDB Atlas
 
@@ -203,9 +208,9 @@ Validate the S3 data are created as a document in MongoDB Atlas
 
 ## Summary
 
-The above steps demonstrate the movement of data from S3 bucket to MongoDB Atlas. The same steps can be used to move data from MongoDB Atlas to S3 bucket using the [code](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/pyspark_atlastos3.py).
+The above steps demonstrate the movement of data from the S3 bucket to MongoDB Atlas. The same steps can be used to move data from MongoDB Atlas to S3 bucket using the [code](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/pyspark_atlastos3.py).
 
-Hope this technical guide helped you in move the data from and to the MongoDB Atlas cluster using the AWS Glue Studio.
+Hope this technical guide helped you move the data from and to the MongoDB Atlas cluster using the AWS Glue Studio.
 
 This solution can be extended to other data sources through AWS Glue Studio - Catalog service. Refer [link](https://github.com/Babusrinivasan76/atlasgluestudiointegration).
 
