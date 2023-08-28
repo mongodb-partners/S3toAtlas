@@ -73,13 +73,18 @@ user_name, password, server_addr = get_secret()
 
 uri = "mongodb+srv://{}.mongodb.net/?retryWrites=true&w=majority".format(server_addr) 
 
+
+
 read_mongo_options = {
-    "uri": uri,
+    "connection.uri": uri,
     "database":args['DATABASE_NAME'],
     "collection": args['COLLECTION_NAME'],   
     "username": user_name,   
     "password": password  
 }
+
+
+## For Glue version 3.0 use "uri":uri, instead of "connection.uri":uri
 
 ## Read from the MongoDB Atlas
 ds = glueContext.create_dynamic_frame_from_options(connection_type="mongodb", connection_options= read_mongo_options)
