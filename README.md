@@ -207,6 +207,8 @@ Validate the S3 data are created as a document in MongoDB Atlas
 
 ## Troubleshoot
 
+If you are using Glue version 3.0, the connection string to changed from "connection.uri" --> "uri"
+
 If you are using Glue version 4.0, the connection string to changed from "uri" --> "connection.uri"
 
 <img width="702" alt="image" src="https://github.com/mongodb-partners/S3toAtlas/assets/101570105/c8ec8d2b-4c37-423b-ab80-99ec2649c1da">
