@@ -76,12 +76,14 @@ logger = glueContext.get_logger()
 logger.info("Connecting...")
 
 write_mongo_options = {
-    "uri": mongo_uri,
+    "connection.uri": mongo_uri,
     "database": args['DATABASE_NAME'],
     "collection":args['COLLECTION_NAME'],
     "username": user_name,   
     "password": password  
 }
+
+### for Glue verion 3.0, use "uri":mongo_uri, instead of "connection.luri": mongo_uri
 
 # Write DynamicFrame to MongoDB and DocumentDB
 glueContext.write_dynamic_frame.from_options( ds, connection_type="mongodb", connection_options= write_mongo_options)
