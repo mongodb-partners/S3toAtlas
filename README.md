@@ -16,7 +16,7 @@ This article is to demonstrate the capabilities of MongoDB Atlas and AWS Glue St
 
 ## MongoDB Atlas
 
-[MongoDB Atlas](https://www.mongodb.com/atlas) is an all-purpose database having features like Document Model, Geo-spatial, Time Series, hybrid deployment, and multi-cloud services. It evolved as a "Developer Data Platform", intended to reduce the developer's workload on the development and management the database environment. It also provides a free tier to test out the application/database features.
+[MongoDB Atlas](https://www.mongodb.com/atlas) is an all-purpose database having features like Document Model, Geo-spatial, Time Series, hybrid deployment, and multi-cloud services. It evolved as a "Developer Data Platform", intended to reduce the developer's workload on the development and management of the database environment. It also provides a free tier to test out the application/database features.
 
 
 ## AWS Glue Studio
@@ -196,7 +196,7 @@ You can keep the default values for all other parameters.
 
 Save the job and click "Run" on the top right.
 
-Click on the "Runs" tab and ensure the job ran successfully. You can refer the logs in the "Runs" tab for troubleshooting
+Click on the "Runs" tab and ensure the job ran successfully. You can refer to the logs in the "Runs" tab for troubleshooting
 
 
 ### 6. Validate the Data in MongoDB Atlas
@@ -204,6 +204,12 @@ Click on the "Runs" tab and ensure the job ran successfully. You can refer the l
 Validate the S3 data are created as a document in MongoDB Atlas
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/32.validat%20the%20MongoDB%20data.png)
+
+## Troubleshoot
+
+If you are using Glue version 4.0, the connection string to changed from "uri" --> "connection.uri"
+
+<img width="702" alt="image" src="https://github.com/mongodb-partners/S3toAtlas/assets/101570105/c8ec8d2b-4c37-423b-ab80-99ec2649c1da">
 
 
 ## Summary
