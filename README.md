@@ -185,13 +185,13 @@ You can keep the default values for all other parameters.
 
 
 
-		--BUCKET_NAME
-		--COLLECTION_NAME
-		--DATABASE_NAME
-		--INPUT_FILENAME
-		--PREFIX
-		--REGION_NAME
-		--SECRET_NAME
+		--BUCKET_NAME <name of the bucket you placed the airports.json file into e.g. my-bucket>
+		--COLLECTION_NAME <choose a name you would like for your collection in your MongoDB cluster e.g. s3collection>
+		--DATABASE_NAME <choose a name you would like for your database in your MongoDB cluster e.g. s3db>
+		--INPUT_FILENAME <the name of the source data file you placed in S3 e.g. airports.json>
+		--PREFIX <choose a name you would like for your prefix e.g. toatlas>
+		--REGION_NAME <the region you have used for your secret e.g. eu-west-1>
+		--SECRET_NAME <the name you set for your secret e.g. partner-gluejob-secrets-s3atlas>
 
 
 Save the job and click "Run" on the top right.
