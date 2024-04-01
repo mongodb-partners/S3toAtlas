@@ -41,39 +41,30 @@ With AWS Glue Studio, we can now create scripts for integrations with all the da
 
 ### 1. Set up the MongoDB Atlas cluster
 
-Please follow the [link](https://www.mongodb.com/docs/atlas/tutorial/deploy-free-tier-cluster) to set up a free cluster in MongoDB Atlas
+- Please follow the [link](https://www.mongodb.com/docs/atlas/tutorial/deploy-free-tier-cluster) to set up a free cluster (M0 Sandbox) in MongoDB Atlas. 
 
-Configure the database for [network security](https://www.mongodb.com/docs/atlas/security/add-ip-address-to-list/) and [access](https://www.mongodb.com/docs/atlas/tutorial/create-mongodb-user-for-cluster/).
+- Configure the database for [network security](https://www.mongodb.com/docs/atlas/security/add-ip-address-to-list/) and [access](https://www.mongodb.com/docs/atlas/tutorial/create-mongodb-user-for-cluster/).
 
-For this lab, configure the [network access](https://www.mongodb.com/docs/atlas/security/add-ip-address-to-list/) to allow connection from anywhere, as seen in the image bellow. This is a way of making sure that the Glue Job will be able to access your cluster:
+- For this lab, configure the [network access](https://www.mongodb.com/docs/atlas/security/add-ip-address-to-list/) to allow connection from anywhere (0.0.0.0/0), as seen in the image below. This is a way of making sure that the Glue Job will be able to access your cluster:
 
 ![Network access - Allow from anywhere](./media/network-access.png)
 
-ℹ️ _It is not advisable to use over-permissive network access in a real-world setting. The recommended connectivity option would be [AWS PrivateLink](https://www.mongodb.com/docs/atlas/security-private-endpoint/) or [VPC Peering](https://www.mongodb.com/docs/atlas/security-vpc-peering/) with proper network security polices. However, this is not covered in this lab._
+> [!CAUTION]
+> It is not advisable to use over-permissive network access in a real-world setting. The recommended connectivity option would be [AWS PrivateLink](https://www.mongodb.com/docs/atlas/security-private-endpoint/) or [VPC Peering](https://www.mongodb.com/docs/atlas/security-vpc-peering/) with proper network security polices. However, this is not covered in this lab.
 
 ### 2. Connect to the AWS CLI environment and Set up the AWS Secrets
 
+- [Connect to AWS CLI environment](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html) or use [AWS CloudShell](https://console.aws.amazon.com/cloudshell).
 
-
-[Connect to AWS CLI environment](https://docs.aws.amazon.com/polly/latest/dg/setup-aws-cli.html)
-
-
-execute the below CLI command to create a secret and copy the ARN from the output.
-
-
-	aws secretsmanager create-secret\
-    	--name partner-gluejob-secrets-s3atlas\
+- Execute the below CLI command to create a secret and copy the ARN from the output.
+```sh
+aws secretsmanager create-secret\
+	--name partner-gluejob-secrets-s3atlas\
     	--description "Secret for MongoDB Atlas"\
     	--secret-string "{\"USERNAME\":\"<enter the user name> \",\"PASSWORD\":\"<enter the password>\",\"SERVER_ADDR\":\"<enter the servername>\"}"
-
-Note:
-While providing the server address, provide only the server name.
-
-You can find the server name in the connection string. To view the connection string you can reach for the "Connect" button on your Atlas Cluster.
-
-Example provide below:
-
-![server name in the connection string](./media/conn-servername.png)
+```
+> [!NOTE]
+>  While providing the server address, provide only the server name. You can find the server name in the connection string. To view the connection string you can reach for the _"Connect"_ button on your Atlas Cluster. Example provide below: <img width="800" alt="image" src="./media/conn-servername.png">
 
 Server connection string: `"mongodb+srv://cluster0.vlan6.mongodb.net/?retryWrites=true&w=majority"`
 SERVER_ADDR = `cluster0.vlan6`
@@ -84,11 +75,11 @@ SERVER_ADDR = `cluster0.vlan6`
 Refer to the screenshots below as reference.
 
 
-<img width="1688" alt="image" src="https://user-images.githubusercontent.com/101570105/208076474-de8598fd-6b26-4e3b-8ef6-dca5dd68792d.png">
+<img width="800" alt="image" src="https://user-images.githubusercontent.com/101570105/208076474-de8598fd-6b26-4e3b-8ef6-dca5dd68792d.png">
 
 
 
-<img width="1716" alt="image" src="https://user-images.githubusercontent.com/101570105/208076795-6f37e50b-a07a-4b6e-9ec1-0d1044be819c.png">
+<img width="800" alt="image" src="https://user-images.githubusercontent.com/101570105/208076795-6f37e50b-a07a-4b6e-9ec1-0d1044be819c.png">
 
 
 
@@ -96,35 +87,40 @@ Refer to the screenshots below as reference.
 
 
 Trust Policy
-
-		{
-		    "Version": "2012-10-17",
-		    "Statement": [
-			{
-			    "Effect": "Allow",
-			    "Principal": {
-				"Service": "glue.amazonaws.com"
-					 },
-			    "Action": "sts:AssumeRole"
-			}
-				]
-		}
-
-
-
-
-In-line policy to grant access to the AWS Secrets, using the ARN copied in the above step2
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+	{
+	    "Effect": "Allow",
+	    "Principal": {
+		"Service": "glue.amazonaws.com"
+			 },
+	    "Action": "sts:AssumeRole"
+	}
+    ]
+}
+```
 
 
-			{
-			    "Version": "2012-10-17",
-			    "Statement": {
-				"Effect": "Allow",
-				"Action": "secretsmanager:GetSecretValue",
-				"Resource": "<ARN for AWS Secret>"
-			    }
-			}
 
+In-line policy to grant access to the AWS Secrets, using the ARN copied in the above step 2
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": {
+	"Effect": "Allow",
+	"Action": "secretsmanager:GetSecretValue",
+	"Resource": "<ARN for AWS Secret>"
+    }
+}
+```
+> [!TIP]
+> If you lost the ARN copied at step 2, you can retrieve the ARN by executing on the CLI the command:
+> ```bash
+> aws secretsmanager list-secrets --filters Key="name",Values="partner-gluejob-secrets-s3atlas"
+> ```
 
 ### 4. Upload the sample JSON file to S3 bucket
 
@@ -134,44 +130,38 @@ Upload the sample [airport.json](https://github.com/mongodb-partners/S3toAtlas/b
 
 ### 5. Create a Glue Studio Job and run
 
-Login to [AWS Console](https://aws.amazon.com/console/)
+- Login to [AWS Console](https://aws.amazon.com/console/)
 
 
-Search for AWS Glue Studio and select from the dropdown (Features --> AWS Glue Studio)
+- Search for AWS Glue Studio and select from the dropdown (Features --> AWS Glue Studio)
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/33.AWS%20Glue%20Studio%20Search.png)
 
 
 
-Click on the Job from the menu and select "Spark script editor"
-
-
-Click "Create"
+- Click on the Job from the menu and select "Spark script editor". Then click "Create".
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/28.create%20a%20job.png)
 
 
-Copy the Code from the [link](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/pyspark_s3toatlas.py) and paste
+- Copy the Code from the [link](https://github.com/mongodb-partners/S3toAtlas/blob/main/code/pyspark_s3toatlas.py) and paste it in the code editor.
 
-
-In the code, you'll find the S3 bucket details (#ds), MongoDB Atlas Connection  (#mongo_uri), database, collection, username and password details. The Job Parameters (see below) will be used to populate these variables. But you can also choose to change the variables as seen below:
+	- In the code, you'll find the S3 bucket details (#ds), MongoDB Atlas Connection  (#mongo_uri), database, collection, username and password details. The Job Parameters (see below) will be used to populate these variables. But you can also choose to change the variables as seen below:
 
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/29.copy%20the%20code.png)
 
 
 
-Configure the parameters in the "Job details" tab
+- Configure the parameters in the "Job details" tab. Update the following parameters:
 
-Update the following parameters:
+  	- **Name**
 
-a. Name
+	- **IAM Role** (with the previously created role)
 
-b. IAM Role (with the previously created role)
+	- **Job Parameter**
 
-c. Job Parameter
-
-You can keep the default values for all other parameters.
+	- You can keep the default values for all other parameters.
 
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/30.update%20the%20job%20details.png)
@@ -184,34 +174,33 @@ You can keep the default values for all other parameters.
 <img width="1001" alt="image" src="https://user-images.githubusercontent.com/101570105/208073166-cbf10d4b-1f19-4031-9bc6-cf0367f14e96.png">
 
 
+```
+--BUCKET_NAME <name of the bucket you placed the airports.json file into e.g. my-bucket>
+--COLLECTION_NAME <choose a name you would like for your collection in your MongoDB cluster e.g. s3collection>
+--DATABASE_NAME <choose a name you would like for your database in your MongoDB cluster e.g. s3db>
+--INPUT_FILENAME <the name of the source data file you placed in S3 e.g. airports.json>
+--PREFIX <choose a name you would like for your prefix e.g. toatlas>
+--REGION_NAME <the region you have used for your secret e.g. eu-west-1>
+--SECRET_NAME <the name you set for your secret e.g. partner-gluejob-secrets-s3atlas>
+```
 
-		--BUCKET_NAME <name of the bucket you placed the airports.json file into e.g. my-bucket>
-		--COLLECTION_NAME <choose a name you would like for your collection in your MongoDB cluster e.g. s3collection>
-		--DATABASE_NAME <choose a name you would like for your database in your MongoDB cluster e.g. s3db>
-		--INPUT_FILENAME <the name of the source data file you placed in S3 e.g. airports.json>
-		--PREFIX <choose a name you would like for your prefix e.g. toatlas>
-		--REGION_NAME <the region you have used for your secret e.g. eu-west-1>
-		--SECRET_NAME <the name you set for your secret e.g. partner-gluejob-secrets-s3atlas>
+- Save the job and click "Run" on the top right.
 
-
-Save the job and click "Run" on the top right.
-
-Click on the "Runs" tab and ensure the job ran successfully. You can refer to the logs in the "Runs" tab for troubleshooting
+- Click on the "Runs" tab and ensure the job ran successfully. You can refer to the logs in the "Runs" tab for troubleshooting
 
 
 ### 6. Validate the Data in MongoDB Atlas
 
-Validate the S3 data are created as a document in MongoDB Atlas
+- Validate the S3 data are created as a document in MongoDB Atlas
 
 ![](https://github.com/Babusrinivasan76/atlasgluestudiointegration/blob/main/images/VPC%20Creation/32.validat%20the%20MongoDB%20data.png)
 
 ## Troubleshoot
+If you are using Glue version 3.0, the connection string to changed from `connection.uri` → `uri`
 
-If you are using Glue version 3.0, the connection string to changed from "connection.uri" --> "uri"
+If you are using Glue version 4.0, the connection string to changed from `uri` → `connection.uri`
 
-If you are using Glue version 4.0, the connection string to changed from "uri" --> "connection.uri"
-
-<img width="702" alt="image" src="https://github.com/mongodb-partners/S3toAtlas/assets/101570105/c8ec8d2b-4c37-423b-ab80-99ec2649c1da">
+<img width="400" alt="image" src="https://github.com/mongodb-partners/S3toAtlas/assets/101570105/c8ec8d2b-4c37-423b-ab80-99ec2649c1da">
 
 
 ## Summary
